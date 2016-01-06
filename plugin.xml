@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.easycom.cordova.moodstocksScanner"
     version="0.0.1">
-    <name>EasyScanner</name>
+    <name>moodstocksScanner</name>
     <description>EasyScanner plugins help to integrate Moodstocks SDK in your Cordova application. This plugin let you the possibility too choose your moodstocks account.(http://www.moodstocks.com/).
     </description>
     <author>Easycom</author>
@@ -14,21 +14,25 @@
     <repo>https://github.com/jgodart/EasyScanner.git</repo>
     <issue>https://github.com/jgodart/EasyScanner/issues</issue>
 
-    <js-module src="www/MoodstocksScanner.js" name="MoodstocksScanner">
-        <clobbers target="cordova.plugins.EasyScanner" />
+    <dependency id="cordova-plugin-camera" url="https://github.com/apache/cordova-plugin-camera.git"  />
+    <js-module src="www/moodstocksScanner.js" name="moodstocksScanner">
+        <clobbers target="moodstocksScanner" />
     </js-module>
 
     <!-- ios -->
     <platform name="ios">
       <config-file target="config.xml" parent="/*">
-            <feature name="easyScannerPlugin">
-                <param name="ios-package" value="com.easycom.cordova.moodstocksScanner" />
+            <feature name="moodstocksScanner">
+                <param name="ios-package" value="moodstocksScanner" />
             </feature>
       </config-file>
         
         <!-- header & source files -->
         <header-file src="src/ios/easyScannerplugin.h" />
         <source-file src="src/ios/easyScannerplugin.m" />
+        <header-file src="src/ios/ScannerViewController.h" />
+        <source-file src="src/ios/ScannerViewController.m" />
+        <resource-file src="src/ios/ScannerViewController.xib" />
 
         <!-- system frameworks -->
         <framework src="CFNetwork.framework" />
@@ -42,13 +46,27 @@
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-    <feature name="easyScannerPlugin" >
+    <feature name="moodstocksScanner" >
       <param name="android-package" value="com.easycom.cordova.moodstocksScanner"/>
     </feature>
   </config-file>
+  
+        <!-- uses permission & feature -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-feature
+                android:name="android.hardware.camera"
+                android:required="false" />
+            <uses-feature
+                android:name="android.hardware.camera.any"
+                android:required="false" />
+        </config-file>
  
  <!-- source files -->
-  <source-file src="src/android/easyScannerPlugin.java" target-dir="src/com/easycom/cordova/EasyScanner"/>
+  <source-file src="src/android/easyScannerPlugin.java" target-dir="src/com/easycom/cordova/moodstocksScanner"/>
+  <source-file src="src/android/MainActivity.java" target-dir="src/com/easycom/cordova/moodstocksScanner" /> 
     </platform>
 
 </plugin>
