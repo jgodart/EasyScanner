@@ -1,6 +1,6 @@
 // MainActivity.java
 
-package com.Society.example;
+package com.easycom.cordova.moodstocksScanner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,19 +38,17 @@ public class MainActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_main);
 
-    compatible = Scanner.isCompatible();
-    if (compatible) {
-      try {
-        scanner = Scanner.get();
-        String path = Scanner.pathFromFilesDir(this, "scanner.db");
-        scanner.open(path, API_KEY, API_SECRET);
-      } catch (MoodstocksError e) {
-        e.printStackTrace();
-      }
-    }
+        // Load the CordovaFragment into the main view.
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        cordovaFragment = new CordovaFragment();
+        fragmentTransaction.add(R.id.cordovaFragmentHolder, cordovaFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit(); 
   }
 
   public void openScanner (String bundleName , String api_key, String api_secret)
@@ -59,13 +57,13 @@ public class MainActivity extends Activity {
     // Moodstocks API key/secret pair 
     String API_KEY = api_key;
     String API_SECRET = api_secret;
-
+    String nameDb = api_key + ".db";
         // Create the scanner object and start syncing
     compatible = Scanner.isCompatible();
     if (compatible) {
       try {
         scanner = Scanner.get();
-        String path = Scanner.pathFromFilesDir(this, "scanner.db");
+        String path = Scanner.pathFromFilesDir(this, nameDb);
         scanner.open(path, API_KEY, API_SECRET);
         if (bundleName != null) {
           loadBundle(bundleName,API_KEY);

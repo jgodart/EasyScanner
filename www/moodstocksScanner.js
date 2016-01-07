@@ -5,7 +5,7 @@
 
 var  moodstocksScanner = {
 
-	openScanner: function (successCallback, errorCallback,api_key,api_secret,bundleName) {
+	openScanner: function (successCallback, errorCallback, bundleName, api_key, api_secret) {
 		if (typeof bundleName == null) {
 			cordova.exec(successCallback, errorCallback, 'moodstocksScanner', 'openScanner', [{
 				"api_key": api_key , "api_secret": api_secret

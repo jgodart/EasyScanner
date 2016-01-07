@@ -34,24 +34,29 @@ ScannerViewController *scannerVC;
     
     CDVPluginResult* pluginResult = nil;
     
-    // Fetch all value set in parameters
     NSArray *arguments = command.arguments;
+
+    NSString *db = @".db";
     NSString *api_Key    = [[arguments objectAtIndex:0] valueForKey:@"api_key"];
     NSString *api_Secret = [[arguments objectAtIndex:0] valueForKey:@"api_secret"];
-    NSString *bundleName = [[arguments objectAtIndex:0] valueForKey:@"bundleName"];
-    NSError *error;
-    //fetch the path of local db
-    NSString *path = [MSScanner cachesPathFor:@"scanner.db"];
-    NSLog((@" Path  : %@ ") , path);
 
-    // Alloc and init a MSScanner Object
+    NSError *error = nil;
+
+    // Create the name Of the Database With the Api_Key
+    NSString *nameDb=[NSString stringWithFormat:@"%@%@", api_Key , db];
+    NSLog((@" nameDb  : %@ ") , nameDb);
+
+    NSString *path = [MSScanner cachesPathFor:nameDb];
+
     __scanner = [[MSScanner alloc] init];
-
-    //Open the scanner with parameters, path of local db, API ( Moodstocks Developper Account)  
     [__scanner openWithPath:path key:api_Key secret:api_Secret error:&error];
     NSLog((@"Error de path  : %@ ") , [error ms_message]);
+    
+    NSLog((@" Path  : %@ ") , path);
+   
    
     BOOL bundleLoaded = NO;
+    NSString* bundleName = [[arguments objectAtIndex:0] valueForKey:@"bundleName"];
       // remove the ".bundle" from the end of the bundleName
     if ([bundleName length] < 7) {
         // ".bundle" is 7 characters long. If the string's shorter than that, a bundle hasn't been defined properly
