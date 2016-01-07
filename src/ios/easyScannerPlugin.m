@@ -157,9 +157,12 @@ ScannerViewController *scannerVC;
         if (error)
         {
             NSLog(@"Sync failed with error: %@", [error ms_message]);
+            syncPluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
         }
-        else{
-                NSLog(@"Sync succeeded (%li images(s))", (long)[__scanner count:nil]);
+        else
+        {
+            NSLog(@"Sync succeeded (%li images(s))", (long)[__scanner count:nil]);
+            syncPluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)[_scanner count:nil]];
         }
         [self.commandDelegate sendPluginResult:syncPluginResult callbackId:command.callbackId];
         
