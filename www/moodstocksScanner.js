@@ -71,7 +71,7 @@ var  moodstocksScanner = {
 			returnQueryFrame = false;
 		}
 
-		cordova.exec(successCallback, errorCallback, 'MS4Plugin', 'scan', [{
+		cordova.exec(successCallback, errorCallback, 'moodstocksScanner', 'Scan', [{
 			"scanType": scanOptions['scanType'],
 			"scanFormats": formats,
 			"useDeviceOrientation": deviceOrientation,

@@ -162,7 +162,7 @@ ScannerViewController *scannerVC;
         else
         {
             NSLog(@"Sync succeeded (%li images(s))", (long)[__scanner count:nil]);
-            syncPluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)[_scanner count:nil]];
+            syncPluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)[__scanner count:nil]];
         }
         [self.commandDelegate sendPluginResult:syncPluginResult callbackId:command.callbackId];
         
