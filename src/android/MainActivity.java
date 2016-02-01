@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
       scanner.sync();
   }
 
-  public void loadBundle (String bundleName , String api_key,)
+  public void loadBundle (String bundleName , String api_key)
   {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     if (!prefs.getBoolean("firstTime", false)) {
