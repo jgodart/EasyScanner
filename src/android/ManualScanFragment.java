@@ -154,9 +154,9 @@ public class ManualScanFragment extends Fragment implements
 				e.printStackTrace();
 			}
 			
-			MS4Plugin.scanSuccess(obj);
+			easyScannerPlugin.scanSuccess(obj);
 		} else {
-			MS4Plugin.scanNoResult();
+			easyScannerPlugin.scanNoResult();
 		}
 		// by default the ManualScanner pauses after it gets a result. This seems odd so I restart it immediately.
 		resumeScan();

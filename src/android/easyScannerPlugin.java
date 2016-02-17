@@ -118,10 +118,10 @@ public class easyScannerPlugin extends CordovaPlugin {
 				openCallbackContext = callbackContext;
 				if(args.getJSONObject(0).length()<1) {
 					Log.d("openScan", "no Bundle");
-					((MainActivity) this.cordova.getActivity()).openScanner(null);
+					((MainActivity) this.cordova.getActivity()).openScanner(null,args.getString(1),args.getString(2));
 				}
 				else {
-					((MainActivity) this.cordova.getActivity()).openScanner(args.getJSONObject(0).opt("bundleName").toString());
+					((MainActivity) this.cordova.getActivity()).openScanner(args.getJSONObject(0).opt("bundleName").toString(),args.getString(1),args.getString(2));
 				}
 			}		
 			if (action.equals(STOP_SCAN)){

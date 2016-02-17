@@ -109,10 +109,10 @@ public class MainActivity extends Activity {
     // test if bundle has ever been loaded
     if (!prefs.getBoolean("bundleLoaded", false)) {
       // scanner opened, bundle loaded.
-      MS4Plugin.openFinished(true);
+      easyScannerPlugin.openFinished(true);
     } else {
       // scanner opened, no bundle loaded.
-      MS4Plugin.openFinished(false);
+      easyScannerPlugin.openFinished(false);
     }
   }
 

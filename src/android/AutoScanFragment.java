@@ -68,16 +68,16 @@ public class AutoScanFragment extends Fragment implements AutoScannerSession.Lis
             session = new AutoScannerSession(getActivity(), Scanner.get(), this, preview);
             //session.setResultExtras(extras)
             // Turn on or off Partial recognition -- SearchOption.SMALLTARGET works too.
-            if (MS4Plugin.noPartials == true){
+            if (easyScannerPlugin.noPartials == true){
             	session.setSearchOptions(SearchOption.NOPARTIAL);            
             }
-            if (MS4Plugin.smallTarget == true) {
+            if (easyScannerPlugin.smallTarget == true) {
             	session.setSearchOptions(SearchOption.SMALLTARGET);
             }
-            if (MS4Plugin.useDeviceRotation == true) {
+            if (easyScannerPlugin.useDeviceRotation == true) {
             	//
             }
-            session.setResultTypes(MS4Plugin.scanFormats);
+            session.setResultTypes(easyScannerPlugin.scanFormats);
             session.start();
 
         } catch (MoodstocksError e) {
@@ -150,7 +150,7 @@ public class AutoScanFragment extends Fragment implements AutoScannerSession.Lis
 			e.printStackTrace();
 		}
    	
-    	MS4Plugin.scanSuccess(obj);
+    	easyScannerPlugin.scanSuccess(obj);
     }
 
 }
