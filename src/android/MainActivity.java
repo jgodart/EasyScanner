@@ -36,6 +36,9 @@ public class MainActivity extends Activity {
   private boolean compatible = false;
   private Scanner scanner;
 
+  private Fragment cordovaFragment;
+  private Fragment scanFragment;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -27,7 +27,7 @@ public class easyScannerPlugin extends CordovaPlugin {
 	public static final String RESUME_SCAN = "resumeScan";
 	public static final String TAP_TO_SCAN = "tapToScan";
 	public static final String OPEN_SCAN = "openScanner";
-	public static final String SYNC_SCAN = "syncScanner";	
+	public static final String SYNC_SCAN = "synchroScanner";	
 	
 	/* CallbackContexts are stored in a public variable so they can be used later in this class. */
 	/* This is a different pattern from previous versions of the plugin which used startActivityForResult. */
@@ -92,7 +92,6 @@ public class easyScannerPlugin extends CordovaPlugin {
 			if (action.equals(RECOGNISE_PHOTO_STRING)){
 				recognisePhotoCallbackContext = callbackContext;
 				// The phonegap camera plugin passes me a correctly rotated and scaled image as a Base64 string
-				((MainActivity) this.cordova.getActivity()).processCustomImageString(args.getJSONObject(0).optString("photoString").toString());
 		    }	
 			if (action.equals(START_SCAN)){
 				scanCallbackContext = callbackContext;
@@ -139,7 +138,7 @@ public class easyScannerPlugin extends CordovaPlugin {
 			}
 			if (action.equals(SYNC_SCAN)) {
 				syncCallbackContext = callbackContext;
-				((MainActivity) this.cordova.getActivity()).syncScanner();
+				((MainActivity) this.cordova.getActivity()).synchroScanner();
 			}
 			return true;
 		}
