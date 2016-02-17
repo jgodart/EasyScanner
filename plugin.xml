@@ -67,6 +67,14 @@
  <!-- source files -->
   <source-file src="src/android/easyScannerPlugin.java" target-dir="src/com/easycom/cordova/moodstocksScanner"/>
   <source-file src="src/android/MainActivity.java" target-dir="src/com/easycom/cordova/moodstocksScanner" /> 
+  <source-file src="src/android/AutoScanFragment.java" target-dir="src/com/easycom/cordova/moodstocksScanner" />
+  <source-file src="src/android/CordovaFragment.java" target-dir="src/com/easycom/cordova/moodstocksScanner" />
+  <source-file src="src/android/ManualScanFragment.java" target-dir="src/com/easycom/cordova/moodstocksScanner" />
+        
+  <source-file src="src/android/activity_main.xml" target-dir="res/layout" />      
+  <source-file src="src/android/fragment_cordova.xml" target-dir="res/layout" />      
+  <source-file src="src/android/fragment_scan.xml" target-dir="res/layout" />
+  
     </platform>
 
 </plugin>
