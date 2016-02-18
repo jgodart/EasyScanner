@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
         }
         else {
           // scanner opened, no bundle loaded.
-          easyScannerplugin.openFinished(false);
+          easyScannerPlugin.openFinished(false);
         }
         scanner.setSyncListener(this);
       } catch (MoodstocksError e) {
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
     public void onSyncComplete() {
         try {
             Log.d("Moodstocks SDK", "Sync succeeded (" + scanner.count() + " images)");
-            easyScannerplugin.syncFinished(scanner.count());
+            easyScannerPlugin.syncFinished(scanner.count());
         } catch (MoodstocksError e) {
             e.printStackTrace();
         }
@@ -151,7 +151,7 @@ public class MainActivity extends Activity {
     @Override
     public void onSyncFailed(MoodstocksError e) {
         Log.d("Moodstocks SDK", "Sync error #" + e.getErrorCode() + ": " + e.getMessage());
-        easyScannerplugin.syncFailed();
+        easyScannerPlugin.syncFailed();
     }
 
     @Override

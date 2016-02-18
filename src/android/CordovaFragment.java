@@ -52,31 +52,60 @@ import android.webkit.WebView;
 
 public class CordovaFragment extends Fragment implements CordovaInterface {
     CordovaWebView myWebView;
+    protected CordovaPreferences preferences;
+    protected String launchUrl;
+    protected ArrayList<PluginEntry> pluginEntries;
+    protected CordovaInterfaceImpl cordovaInterface;
 
-//    public static CordovaFragment newInstance() {
-//    	CordovaFragment fragment = new CordovaFragment();
-//        return fragment;
-//    }
+    protected void loadConfig() {
+        ConfigXmlParser parser = new ConfigXmlParser();
+        parser.parse(getActivity());
+        preferences = parser.getPreferences();
+        preferences.setPreferencesBundle(getActivity().getIntent().getExtras());
+//        preferences.copyIntoIntentExtras(getActivity());
+        launchUrl = parser.getLaunchUrl();
+        pluginEntries = parser.getPluginEntries();
+//         Config.parser = parser;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         LayoutInflater localInflater = inflater.cloneInContext(new CordovaContext(getActivity(), this));
-        View rootView = localInflater.inflate(R.layout.fragment_cordova, container, false);        
-        myWebView = (CordovaWebView) rootView.findViewById(R.id.myWebView);
-        myWebView.setBackgroundColor(Color.argb(1, 0, 0, 0));
-        
-		// fixes a bug in android 3.0 - 4.0.3 that causes an issue with transparent webviews.
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
-				&& android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-			myWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
-		}
-        
-        
-        Config.init(getActivity());
-        myWebView.loadUrl(Config.getStartUrl());
+        View rootView = localInflater.inflate(R.layout.fragment_cordova, container, false);
+
+        cordovaInterface = new CordovaInterfaceImpl(getActivity());
+        if(savedInstanceState != null) cordovaInterface.restoreInstanceState(savedInstanceState);
+
+        loadConfig();
+
+        myWebView = new CordovaWebViewImpl(CordovaWebViewImpl.createEngine(getActivity(), preferences));
+        myWebView.getView().setId(100);
+        RelativeLayout.LayoutParams wvlp = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        myWebView.getView().setLayoutParams(wvlp);
+
+        myWebView.getView().setBackgroundColor(Color.argb(1, 0, 0, 0));
+
+        // fixes a bug in android 3.0 - 4.0.3 that causes an issue with transparent webviews.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB
+                && android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            myWebView.getView().setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+        }
+
+        if (! myWebView.isInitialized()) {
+            myWebView.init(cordovaInterface, pluginEntries, preferences);
+        }
+        cordovaInterface.onCordovaInit(myWebView.getPluginManager());
+
+
+        // Config.init(getActivity());
+        ((RelativeLayout)rootView).addView(myWebView.getView());
+        myWebView.loadUrl(launchUrl);
+
         return rootView;
-    } 
+    }
     
     // Plugin to call when activity result is received
     protected CordovaPlugin activityResultCallback = null;
@@ -95,11 +124,10 @@ public class CordovaFragment extends Fragment implements CordovaInterface {
 
     public void onDestroy() {
         super.onDestroy();
-        if (myWebView.pluginManager != null) {
-            myWebView.pluginManager.onDestroy();
+        if (myWebView.getPluginManager() != null) {
+            myWebView.getPluginManager().onDestroy();
         }
     }
-
     @Override
     public ExecutorService getThreadPool() {
         return threadPool;
