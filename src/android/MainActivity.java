@@ -30,7 +30,7 @@ import com.imactivate.example.R;
 import com.moodstocks.phonegap.plugin.easyScannerplugin;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Scanner.SyncListener {
 
 
   private boolean compatible = false;
@@ -198,7 +198,6 @@ public class MainActivity extends Activity {
         ((AutoScanFragment) scanFragment).pauseScan();
       }
       else {
-
       }
   }
 
